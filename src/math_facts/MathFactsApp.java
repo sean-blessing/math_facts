@@ -13,18 +13,32 @@ import java.awt.DisplayMode;
 public class MathFactsApp {
 
 	public static void main(String[] args) {
-		System.out.println("Welcome to the math facts app!");
+		StringBuilder msg = new StringBuilder("Welcome to the math facts app!\n");
+		msg.append("Each option will present 10 problems.  Your stats will be recorded\n");
+		msg.append("and a summary will be displayed upon completion.\n");
+		msg.append("Good luck!!!\n");
+		System.out.println(msg);
 		displayMenu();
+		
+		for (int i=0; i<10; i++) {
+			System.out.println("Random # = "+getRandomNbr());
+		}
 		System.out.println("Bye!");
 
 	}
 	
 	private static void displayMenu() {
-		System.out.println("Please select an option:");
-		System.out.println("A - Addition");
-		System.out.println("S - Subtraction");
-		System.out.println("M - Multiplication");
-		System.out.println("D - Division");
+		StringBuilder msg = new StringBuilder("Please select an option:\n");
+		msg.append("A - Addition\n");
+		msg.append("S - Subtraction\n");
+		msg.append("M - Multiplication\n");
+		msg.append("D - Division\n");
+		System.out.println(msg);
+	}
+	
+	private static int getRandomNbr() {
+		int a = (int)(Math.random()*10);
+		return a;
 	}
 
 }
