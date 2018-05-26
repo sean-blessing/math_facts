@@ -1,6 +1,8 @@
-package math_facts;
+package ui;
 
 import java.awt.DisplayMode;
+
+import util.Console;
 
 /**
  * 
@@ -19,12 +21,38 @@ public class MathFactsApp {
 		msg.append("Good luck!!!\n");
 		System.out.println(msg);
 		displayMenu();
-		
-		for (int i=0; i<10; i++) {
-			System.out.println("Random # = "+getRandomNbr());
-		}
+		playMultiplicationFacts();
 		System.out.println("Bye!");
 
+	}
+	
+	private static void playMultiplicationFacts() {
+		System.out.println("Multiplication Facts\n");
+		int numRight = 0;
+		int numWrong = 0;
+		boolean correct = false;
+		
+		for (int i=1; i<=10; i++) {
+			int num1 = getRandomNbr();
+			int num2 = getRandomNbr();
+			while (!correct) {
+				System.out.println("Question #"+i+":");
+				int ans = Console.getInt(num1 +" x " + num2 + " = ");
+				if  (ans == num1 * num2) {
+					numRight++;
+					correct = true;
+					System.out.println("Correct!");
+				}
+				else {
+					numWrong++;
+					System.out.println("Wrong!  Try again.");
+				}
+			}
+			correct = false;
+		}
+		System.out.println("Stats:");
+		System.out.println("# right = "+ numRight);
+		System.out.println("# wrong = "+ numWrong);
 	}
 	
 	private static void displayMenu() {
