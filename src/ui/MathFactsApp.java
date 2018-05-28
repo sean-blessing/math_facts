@@ -20,8 +20,21 @@ public class MathFactsApp {
 		msg.append("and a summary will be displayed upon completion.\n");
 		msg.append("Good luck!!!\n");
 		System.out.println(msg);
-		displayMenu();
-		playMultiplicationFacts();
+
+		String choice = "";
+		while (!choice.equalsIgnoreCase("x")) {
+			choice = Console.getString(displayMenu());
+			switch (choice.toUpperCase()) {
+				case "A":	playAdditionFacts();
+							break;
+				case "S":	playSubtractionFacts();
+							break;
+				case "M":	playMultiplicationFacts();
+							break;
+				case "D":	playDivisionFacts();
+							break;
+			}
+		}
 		System.out.println("Bye!");
 
 	}
@@ -55,13 +68,26 @@ public class MathFactsApp {
 		System.out.println("# wrong = "+ numWrong);
 	}
 	
-	private static void displayMenu() {
+	private static void playDivisionFacts() {
+		System.out.println("Function not yet implemented.");
+	}
+
+	private static void playAdditionFacts() {
+		System.out.println("Function not yet implemented.");
+	}
+
+	private static void playSubtractionFacts() {
+		System.out.println("Function not yet implemented.");
+	}
+
+	private static String displayMenu() {
 		StringBuilder msg = new StringBuilder("Please select an option:\n");
 		msg.append("A - Addition\n");
 		msg.append("S - Subtraction\n");
 		msg.append("M - Multiplication\n");
 		msg.append("D - Division\n");
-		System.out.println(msg);
+		msg.append("X - Exit\n");
+		return msg.toString();
 	}
 	
 	private static int getRandomNbr() {
