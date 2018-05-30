@@ -38,7 +38,9 @@ public class MathFactsApp {
 		System.out.println("Bye!");
 
 	}
-	
+	// TODO - Use a lambda to pass in the mathematical function??
+	// May need to create a class representing the calculation...  
+	// 3 ints:  n1, n2, and calculatedValue
 	private static void playMultiplicationFacts() {
 		System.out.println("Multiplication Facts\n");
 		int numRight = 0;
