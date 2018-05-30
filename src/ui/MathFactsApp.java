@@ -1,7 +1,9 @@
 package ui;
 
 import java.awt.DisplayMode;
+import java.util.function.IntBinaryOperator;
 
+import business.Operation;
 import util.Console;
 
 /**
@@ -24,23 +26,74 @@ public class MathFactsApp {
 		String choice = "";
 		while (!choice.equalsIgnoreCase("x")) {
 			choice = Console.getString(displayMenu());
-			switch (choice.toUpperCase()) {
-				case "A":	playAdditionFacts();
-							break;
-				case "S":	playSubtractionFacts();
-							break;
-				case "M":	playMultiplicationFacts();
-							break;
-				case "D":	playDivisionFacts();
-							break;
-			}
+			playMathFacts(choice);
+			
 		}
 		System.out.println("Bye!");
 
 	}
-	// TODO - Use a lambda to pass in the mathematical function??
-	// May need to create a class representing the calculation...  
-	// 3 ints:  n1, n2, and calculatedValue
+
+	// TODO - lambda works, but need to plan for the following:
+	// 1) subtraction...  n1 must be greater than n2
+	// 2) division...  result must be 0 remainder...  also n1 and n2 will need to be a larger range
+	private static void playMathFacts(String choice) {
+		Operation opr = null;
+		switch (choice.toUpperCase()) {
+			case "A":	opr = new Operation("Addition", "+");
+						break;
+			case "S":	opr = new Operation("Subtraction", "-");
+						break;
+			case "M":	opr = new Operation("Multiplication", "*");
+						break;
+			case "D":	opr = new Operation("Division", "/");
+						break;
+		}
+		System.out.println(opr.getOperationString()+" Facts\n");
+		int numRight = 0;
+		int numWrong = 0;
+		boolean correct = false;
+		
+		for (int i=1; i<=10; i++) {
+			int num1 = getRandomNbr();
+			int num2 = getRandomNbr();
+			while (!correct) {
+				System.out.println("Question #"+i+":");
+				int ans = Console.getInt(num1 +" "+opr.getOperationSymbol()+" " + num2 + " = ");
+				int expResult = getExpectedResult(num1,num2,opr);
+				if  (ans == expResult) {
+					numRight++;
+					correct = true;
+					System.out.println("Correct!");
+				}
+				else {
+					numWrong++;
+					System.out.println("Wrong!  Try again.");
+				}
+			}
+			correct = false;
+		}
+		System.out.println("Stats:");
+		System.out.println("# right = "+ numRight);
+		System.out.println("# wrong = "+ numWrong);
+	}
+	
+	private static int getExpectedResult(int n1, int n2, Operation opr) {
+		int er = 0;
+		IntBinaryOperator ibo = null;
+		switch (opr.getOperationSymbol()) {
+		case "+":	ibo = (a, b) -> a + b;
+					break;
+		case "-":	ibo = (a, b) -> a - b;
+					break;
+		case "*":	ibo = (a, b) -> a * b;
+					break;
+		case "/":	ibo = (a, b) -> a / b;
+					break;
+		}
+		er = ibo.applyAsInt(n1, n2);
+		return er;
+	}
+	
 	private static void playMultiplicationFacts() {
 		System.out.println("Multiplication Facts\n");
 		int numRight = 0;
@@ -83,12 +136,13 @@ public class MathFactsApp {
 	}
 
 	private static String displayMenu() {
-		StringBuilder msg = new StringBuilder("Please select an option:\n");
+		StringBuilder msg = new StringBuilder("Math Facts Menu:\n");
 		msg.append("A - Addition\n");
 		msg.append("S - Subtraction\n");
 		msg.append("M - Multiplication\n");
 		msg.append("D - Division\n");
 		msg.append("X - Exit\n");
+		msg.append("Please select an option:\n");
 		return msg.toString();
 	}
 	
