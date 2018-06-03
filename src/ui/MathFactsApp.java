@@ -1,6 +1,8 @@
 package ui;
 
 import java.awt.DisplayMode;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.function.IntBinaryOperator;
 
 import business.Operation;
@@ -26,7 +28,14 @@ public class MathFactsApp {
 		String choice = "";
 		while (!choice.equalsIgnoreCase("x")) {
 			choice = Console.getString(displayMenu());
+			long startTime = System.currentTimeMillis();
 			playMathFacts(choice);
+			long endTime = System.currentTimeMillis();
+			long elapsedTime = endTime - startTime;
+			//LocalDateTime startLT = LocalDateTime.(startTime);
+			System.out.println("Start time = "+startTime);
+			System.out.println("End time = "+endTime);
+			System.out.println("elapsed time = "+elapsedTime);
 			
 		}
 		System.out.println("Bye!");
