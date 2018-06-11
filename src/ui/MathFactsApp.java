@@ -41,15 +41,9 @@ public class MathFactsApp {
 			System.out.println("Thanks for playing!!!");
 			System.out.println("Start time = "+sdf.format(startTime));
 			System.out.println("End time = "+sdf.format(endTime));
-			System.out.println("elapsed time (milliseconds) = "+(elapsedTime));
 			BigDecimal secondsBD = new BigDecimal(elapsedTime);
-			secondsBD.setScale(1, RoundingMode.HALF_UP);
-			secondsBD = secondsBD.divide(new BigDecimal(1000));
-			System.out.println("secondsBD = "+secondsBD);
-			double seconds = elapsedTime/1000;
-			System.out.println("elapsed time (seconds) = "+seconds);
-			int secondsRounded = Math.round(elapsedTime/1000);
-			System.out.println("elapsed time (seconds rounded) = "+secondsRounded);
+			secondsBD = secondsBD.divide(new BigDecimal(1000)).setScale(1, RoundingMode.HALF_UP);
+			System.out.println("Elapsed time (seconds) = "+secondsBD);
 			System.out.println("====================================");
 		}
 		System.out.println("Bye!");
