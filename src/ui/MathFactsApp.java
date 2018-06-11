@@ -1,6 +1,10 @@
 package ui;
 
 import java.awt.DisplayMode;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.function.IntBinaryOperator;
@@ -32,11 +36,21 @@ public class MathFactsApp {
 			playMathFacts(choice);
 			long endTime = System.currentTimeMillis();
 			long elapsedTime = endTime - startTime;
-			//LocalDateTime startLT = LocalDateTime.(startTime);
-			System.out.println("Start time = "+startTime);
-			System.out.println("End time = "+endTime);
-			System.out.println("elapsed time = "+elapsedTime);
-			
+			SimpleDateFormat sdf = new SimpleDateFormat("K:mm:ss' 'a");
+			System.out.println("\n====================================");
+			System.out.println("Thanks for playing!!!");
+			System.out.println("Start time = "+sdf.format(startTime));
+			System.out.println("End time = "+sdf.format(endTime));
+			System.out.println("elapsed time (milliseconds) = "+(elapsedTime));
+			BigDecimal secondsBD = new BigDecimal(elapsedTime);
+			secondsBD.setScale(1, RoundingMode.HALF_UP);
+			secondsBD = secondsBD.divide(new BigDecimal(1000));
+			System.out.println("secondsBD = "+secondsBD);
+			double seconds = elapsedTime/1000;
+			System.out.println("elapsed time (seconds) = "+seconds);
+			int secondsRounded = Math.round(elapsedTime/1000);
+			System.out.println("elapsed time (seconds rounded) = "+secondsRounded);
+			System.out.println("====================================");
 		}
 		System.out.println("Bye!");
 
@@ -62,6 +76,7 @@ public class MathFactsApp {
 		int numWrong = 0;
 		boolean correct = false;
 		
+		//TODO Currently setting # of times to 2 for testing.  Reset to 10 when prod ready.
 		for (int i=1; i<=10; i++) {
 			int num1 = getRandomNbr();
 			int num2 = getRandomNbr();
