@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.function.IntBinaryOperator;
 
+import business.FactsNumbers;
 import business.Operation;
 import util.Console;
 
@@ -71,9 +72,10 @@ public class MathFactsApp {
 		boolean correct = false;
 		
 		//TODO Currently setting # of times to 2 for testing.  Reset to 10 when prod ready.
-		for (int i=1; i<=10; i++) {
-			int num1 = getRandomNbr();
-			int num2 = getRandomNbr();
+		for (int i=1; i<=2; i++) {
+			FactsNumbers fn = FactsNumbers.generateFactsNumbers(opr);
+			int num1 = fn.getNumber1();
+			int num2 = fn.getNumber2();
 			while (!correct) {
 				System.out.println("Question #"+i+":");
 				int ans = Console.getInt(num1 +" "+opr.getOperationSymbol()+" " + num2 + " = ");
