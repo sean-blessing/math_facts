@@ -38,8 +38,8 @@ public class FactsNumbers {
 	public static FactsNumbers generateFactsNumbers(Operation opr) {
 		FactsNumbers fn = new FactsNumbers();
 		
-		int number1 = getRandomNbr();
-		int number2 = getRandomNbr();
+		int number1 = getRandomNbr(10);
+		int number2 = getRandomNbr(10);
 		if (opr.getOperationString().equals("S")) {
 			// ensure number 1 >= number2
 			if (number2 > number1) {
@@ -56,8 +56,11 @@ public class FactsNumbers {
 		return fn;
 	}
 	
-	private static int getRandomNbr() {
-		int a = (int)(Math.random()*10);
+	/*
+	 * Get a random # between 0 and n-1
+	 */
+	private static int getRandomNbr(int n) {
+		int a = (int)(Math.random()*n);
 		return a;
 	}
 }
