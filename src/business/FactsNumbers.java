@@ -40,7 +40,7 @@ public class FactsNumbers {
 		
 		int number1 = getRandomNbr(10);
 		int number2 = getRandomNbr(10);
-		if (opr.getOperationString().equals("S")) {
+		if (opr.getOperationSymbol().equals("-")) {
 			// ensure number 1 >= number2
 			if (number2 > number1) {
 				int hold = number1;
@@ -48,8 +48,19 @@ public class FactsNumbers {
 				number2 = hold;
 			}
 		}
-		else if (opr.getOperationString().equals("D")) {
+		else if (opr.getOperationSymbol().equals("/")) {
 			// ensure the quotient is a whole number???
+			int remainder = 1;
+			while (remainder!=0) {
+				number1 = getRandomNbr(100);
+				// ensure number 1 >= number2
+				if (number2 > number1) {
+					int hold = number1;
+					number1 = number2;
+					number2 = hold;
+				}
+				remainder = number1 % number2;
+			}
 		}
 		fn.setNumber1(number1);
 		fn.setNumber2(number2);
@@ -57,10 +68,10 @@ public class FactsNumbers {
 	}
 	
 	/*
-	 * Get a random # between 0 and n-1
+	 * Get a random # between 1 and n
 	 */
 	private static int getRandomNbr(int n) {
-		int a = (int)(Math.random()*n);
+		int a = (int)(Math.random()*n)+1;
 		return a;
 	}
 }

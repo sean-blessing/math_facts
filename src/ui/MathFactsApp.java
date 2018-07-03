@@ -51,9 +51,7 @@ public class MathFactsApp {
 
 	}
 
-	// TODO - lambda works, but need to plan for the following:
-	// 1) subtraction...  n1 must be greater than n2
-	// 2) division...  result must be 0 remainder...  also n1 and n2 will need to be a larger range
+	// TODO - confirm division logic.  Should dividend be up to 100 or is that too difficult?
 	private static void playMathFacts(String choice) {
 		Operation opr = null;
 		switch (choice.toUpperCase()) {
