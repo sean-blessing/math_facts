@@ -69,8 +69,8 @@ public class MathFactsApp {
 		int numWrong = 0;
 		boolean correct = false;
 		
-		//TODO Currently setting # of times to 2 for testing.  Reset to 10 when prod ready.
-		for (int i=1; i<=2; i++) {
+		//TODO Tweak the summary messages
+		for (int i=1; i<=10; i++) {
 			FactsNumbers fn = FactsNumbers.generateFactsNumbers(opr);
 			int num1 = fn.getNumber1();
 			int num2 = fn.getNumber2();
