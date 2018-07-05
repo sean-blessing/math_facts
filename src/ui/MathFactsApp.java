@@ -30,9 +30,8 @@ public class MathFactsApp {
 		msg.append("Good luck!!!\n");
 		System.out.println(msg);
 
-		String choice = "";
+		String choice = Console.getString(displayMenu());
 		while (!choice.equalsIgnoreCase("x")) {
-			choice = Console.getString(displayMenu());
 			long startTime = System.currentTimeMillis();
 			playMathFacts(choice);
 			long endTime = System.currentTimeMillis();
@@ -46,6 +45,7 @@ public class MathFactsApp {
 			secondsBD = secondsBD.divide(new BigDecimal(1000)).setScale(1, RoundingMode.HALF_UP);
 			System.out.println("Elapsed time (seconds) = "+secondsBD);
 			System.out.println("====================================");
+			choice = Console.getString(displayMenu());
 		}
 		System.out.println("Bye!");
 
