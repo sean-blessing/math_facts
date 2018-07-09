@@ -10,6 +10,7 @@ import java.time.LocalTime;
 import java.util.function.IntBinaryOperator;
 
 import business.FactsNumbers;
+import business.Game;
 import business.Operation;
 import util.Console;
 
@@ -33,7 +34,7 @@ public class MathFactsApp {
 		String choice = Console.getString(displayMenu());
 		while (!choice.equalsIgnoreCase("x")) {
 			long startTime = System.currentTimeMillis();
-			playMathFacts(choice);
+			Game g = playMathFacts(choice);
 			long endTime = System.currentTimeMillis();
 			long elapsedTime = endTime - startTime;
 			SimpleDateFormat sdf = new SimpleDateFormat("K:mm:ss' 'a");
@@ -44,6 +45,8 @@ public class MathFactsApp {
 			BigDecimal secondsBD = new BigDecimal(elapsedTime);
 			secondsBD = secondsBD.divide(new BigDecimal(1000)).setScale(1, RoundingMode.HALF_UP);
 			System.out.println("Elapsed time (seconds) = "+secondsBD);
+			System.out.println("# right: "+g.getNumRight());
+			System.out.println("# wrong: "+g.getNumWrong());
 			System.out.println("====================================");
 			choice = Console.getString(displayMenu());
 		}
@@ -52,7 +55,7 @@ public class MathFactsApp {
 	}
 
 	// TODO - confirm division logic.  Should dividend be up to 100 or is that too difficult?
-	private static void playMathFacts(String choice) {
+	private static Game playMathFacts(String choice) {
 		Operation opr = null;
 		switch (choice.toUpperCase()) {
 			case "A":	opr = new Operation("Addition", "+");
@@ -67,6 +70,7 @@ public class MathFactsApp {
 		System.out.println(opr.getOperationString()+" Facts\n");
 		int numRight = 0;
 		int numWrong = 0;
+		Game g = new Game();
 		boolean correct = false;
 		
 		//TODO Tweak the summary messages
@@ -90,9 +94,9 @@ public class MathFactsApp {
 			}
 			correct = false;
 		}
-		System.out.println("Stats:");
-		System.out.println("# right = "+ numRight);
-		System.out.println("# wrong = "+ numWrong);
+		g.setNumRight(numRight);
+		g.setNumWrong(numWrong);
+		return g;
 	}
 	
 	private static int getExpectedResult(int n1, int n2, Operation opr) {
