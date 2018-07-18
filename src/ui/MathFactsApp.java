@@ -23,6 +23,8 @@ import util.Console;
  */
 
 public class MathFactsApp {
+	private static boolean loggedOn = false;
+	private static String userID = "";
 
 	public static void main(String[] args) {
 		StringBuilder msg = new StringBuilder("Welcome to the math facts app!\n");
@@ -31,6 +33,7 @@ public class MathFactsApp {
 		msg.append("Good luck!!!\n");
 		System.out.println(msg);
 
+		userLogin();
 		String choice = Console.getString(displayMenu());
 		while (!choice.equalsIgnoreCase("x")) {
 			long startTime = System.currentTimeMillis();
@@ -39,7 +42,7 @@ public class MathFactsApp {
 			long elapsedTime = endTime - startTime;
 			SimpleDateFormat sdf = new SimpleDateFormat("K:mm:ss' 'a");
 			System.out.println("\n====================================");
-			System.out.println("Thanks for playing!!!");
+			System.out.println("Thanks for playing, "+userID+"!!!");
 			System.out.println("Start time = "+sdf.format(startTime));
 			System.out.println("End time = "+sdf.format(endTime));
 			BigDecimal secondsBD = new BigDecimal(elapsedTime);
@@ -173,4 +176,11 @@ public class MathFactsApp {
 		return a;
 	}
 
+	private static void userLogin() {
+		userID = Console.getString("Enter userID:  ");
+		if (userID!=null && !userID.trim().equals("")) {
+			System.out.println("Welcome "+userID+"!!");
+		}
+		
+	}
 }
