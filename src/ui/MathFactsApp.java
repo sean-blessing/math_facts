@@ -3,6 +3,7 @@ package ui;
 import java.awt.DisplayMode;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -37,9 +38,13 @@ public class MathFactsApp {
 		String choice = Console.getString(displayMenu());
 		while (!choice.equalsIgnoreCase("x")) {
 			long startTime = System.currentTimeMillis();
+			Date datePlayed = new Date(startTime);
 			Game g = playMathFacts(choice);
 			long endTime = System.currentTimeMillis();
 			long elapsedTime = endTime - startTime;
+			g.setDatePlayed(datePlayed);
+			g.setStartTime(startTime);
+			g.setEndTime(endTime);
 			SimpleDateFormat sdf = new SimpleDateFormat("K:mm:ss' 'a");
 			System.out.println("\n====================================");
 			System.out.println("Thanks for playing, "+userID+"!!!");
@@ -48,6 +53,7 @@ public class MathFactsApp {
 			BigDecimal secondsBD = new BigDecimal(elapsedTime);
 			secondsBD = secondsBD.divide(new BigDecimal(1000)).setScale(1, RoundingMode.HALF_UP);
 			System.out.println("Elapsed time (seconds) = "+secondsBD);
+			g.setElapsedTime(secondsBD.doubleValue());
 			System.out.println("# right: "+g.getNumRight());
 			System.out.println("# wrong: "+g.getNumWrong());
 			System.out.println("====================================");
@@ -73,10 +79,10 @@ public class MathFactsApp {
 		System.out.println(opr.getOperationString()+" Facts\n");
 		int numRight = 0;
 		int numWrong = 0;
-		Game g = new Game();
+		//TODO setting uid to 0 until I get DB built
+		Game g = new Game(0,choice);
 		boolean correct = false;
 		
-		//TODO Tweak the summary messages
 		for (int i=1; i<=10; i++) {
 			FactsNumbers fn = FactsNumbers.generateFactsNumbers(opr);
 			int num1 = fn.getNumber1();
