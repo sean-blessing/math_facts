@@ -1,6 +1,5 @@
 package business;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Game {
@@ -11,13 +10,29 @@ public class Game {
 	private long startTime;
 	private long endTime;
 	private double elapsedTime;
+	private int numQuestions = 0;
 	private int numRight = 0;
 	private int numWrong = 0;
 	
-	
-	public Game(int uid, String t) {
+	public Game(int id, int userID, String type, Timestamp datePlayed, long startTime, long endTime, double elapsedTime,
+			int numQuestions, int numRight, int numWrong) {
+		super();
+		this.id = id;
+		this.userID = userID;
+		this.type = type;
+		this.datePlayed = datePlayed;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.elapsedTime = elapsedTime;
+		this.numQuestions = numQuestions;
+		this.numRight = numRight;
+		this.numWrong = numWrong;
+	}
+
+	public Game(int uid, String t, int n) {
 		userID = uid;
 		type = t;
+		numQuestions = n;
 	}
 	
 	public int getId() {
@@ -74,6 +89,14 @@ public class Game {
 
 	public void setElapsedTime(double elapsedTime) {
 		this.elapsedTime = elapsedTime;
+	}
+
+	public int getNumQuestions() {
+		return numQuestions;
+	}
+
+	public void setNumQuestions(int numQuestions) {
+		this.numQuestions = numQuestions;
 	}
 
 	public int getNumRight() {

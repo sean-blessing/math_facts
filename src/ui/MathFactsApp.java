@@ -79,8 +79,8 @@ public class MathFactsApp {
 		System.out.println(opr.getOperationString()+" Facts\n");
 		int numRight = 0;
 		int numWrong = 0;
-		//TODO setting uid to 0 until I get DB built
-		Game g = new Game(0,choice);
+
+		Game g = new Game(user.getID(),choice, NUM_PROBLEMS);
 		boolean correct = false;
 		
 		for (int i=1; i<=NUM_PROBLEMS; i++) {
