@@ -36,6 +36,28 @@ public class GameDB {
 		return all;
 	}
 
+	public ArrayList<Game> getAllForUserAndType(User u, String t) {
+		ArrayList<Game>  all = new ArrayList<>();
+		String sql = "select * from game "+
+					 " where userID = '"+ u.getID() + "'" +
+					 "   and type = '" + t +"'";
+		try (Connection conn = DBUtil.getConnection();
+				Statement statement = conn.createStatement();
+				ResultSet rs = statement.executeQuery(sql))
+		{
+			while (rs.next()) {
+				Game g = getGameFromRS(rs);
+				all.add(g);
+			}
+		}
+		catch (SQLException sqle) {
+			System.out.println("Error getting all game rows for user and type."); 
+			sqle.printStackTrace();
+		}
+		
+		return all;
+	}
+
 	public Game getGame(int uId) {
 		Game u = null;
 		String sql = "select * from game where id = ?";

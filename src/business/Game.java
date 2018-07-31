@@ -112,6 +112,20 @@ public class Game {
 		this.numWrong = numWrong;
 	}
 
+	public String getOperationString() {
+		String s = "";
+		switch (type.toUpperCase()) {
+		case "A":	s = "Addition";
+					break;
+		case "S":	s = "Subtraction";
+					break;
+		case "M":	s = "Multiplication";
+					break;
+		case "D":	s = "Division";
+					break;
+		}
+		return s;
+	}
 	@Override
 	public String toString() {
 		return "Game [id=" + id + ", userID=" + userID + ", type=" + type + ", datePlayed=" + datePlayed

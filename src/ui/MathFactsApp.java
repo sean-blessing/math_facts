@@ -4,8 +4,10 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.function.IntBinaryOperator;
 
+import business.AllStats;
 import business.FactsNumbers;
 import business.Game;
 import business.GameDB;
@@ -48,6 +50,8 @@ public class MathFactsApp {
 			g.setEndTime(endTime);
 			SimpleDateFormat sdf = new SimpleDateFormat("K:mm:ss' 'a");
 			System.out.println("\n====================================");
+			System.out.println("=            Game Stats            =");
+			System.out.println("====================================");
 			System.out.println("Thanks for playing, "+user.getFirstName()+"!!!");
 			System.out.println("Start time = "+sdf.format(startTime));
 			System.out.println("End time = "+sdf.format(endTime));
@@ -57,12 +61,31 @@ public class MathFactsApp {
 			g.setElapsedTime(secondsBD.doubleValue());
 			System.out.println("# right: "+g.getNumRight());
 			System.out.println("# wrong: "+g.getNumWrong());
-			System.out.println("====================================");
+			System.out.println("====================================/n");
 			// Write game date to DB
 			if (!saveGame(g)) {
 				System.out.println("Error saving game.");
 				System.out.println(g);
 			}
+			System.out.println("\n====================================");
+			System.out.println("=          Overall Stats           =");
+			System.out.println("====================================");
+			AllStats stats = getStatsForUser(user, g.getType());
+			if (stats.getBestTime() == g.getElapsedTime())
+				stats.setBestTimeBeat(true);
+			if (stats.getTimesPlayed() == 0)
+				System.out.println("This was the first time played.  Come back for more!!!");
+			else {
+				System.out.println("Game type = "+g.getOperationString());
+				System.out.println("Total times you've played this game:  "+stats.getTimesPlayed());
+				System.out.println("Total time elapsed during game play:  "+stats.getTotalTime() + " seconds");
+				System.out.println("Average time:  "+stats.getTotalTime() / stats.getTimesPlayed());
+				if (stats.isBestTimeBeat()) 
+					System.out.println("You beat your best time!");
+				else
+					System.out.println("Your best time was "+stats.getBestTime()+".  Try again to beat it!");
+			}
+			System.out.println("====================================");
 			choice = Console.getString(displayMenu());
 		}
 		System.out.println("Bye!");
@@ -213,5 +236,32 @@ public class MathFactsApp {
 		GameDB gdb = new GameDB();
 		success = gdb.addGame(g);
 		return success;
+	}
+	
+	private static AllStats getStatsForUser(User u, String type) {
+		GameDB gdb = new GameDB();
+		int count = 0;
+		int bestScore = 0;
+		double bestTime = 0.0;
+		double totalTime = 0.0;
+		ArrayList<Game> games = gdb.getAllForUserAndType(u, type);
+		AllStats stats = new AllStats(u, type);
+		for (Game g: games) {
+			stats.getGames().add(g);
+			count++;
+			if (g.getNumRight()>bestScore) bestScore = g.getNumRight();
+			if (bestTime == 0) {
+				bestTime = g.getElapsedTime();
+			}
+			else if (g.getElapsedTime() < bestTime) {
+				bestTime = g.getElapsedTime();
+			}
+			totalTime += g.getElapsedTime();
+		}
+		stats.setBestScore(bestScore);
+		stats.setBestTime(bestTime);
+		stats.setTimesPlayed(count);
+		stats.setTotalTime(totalTime);
+		return stats;
 	}
 }
