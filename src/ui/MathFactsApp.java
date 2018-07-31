@@ -25,12 +25,13 @@ public class MathFactsApp {
 	private static boolean loggedOn = false;
 	private static User user = null;
 	private static String userID = "";
+	private static final int NUM_PROBLEMS = 20;
 
 	public static void main(String[] args) {
 		StringBuilder msg = new StringBuilder("Welcome to the math facts app!\n");
-		msg.append("Each option will present 10 problems.  Your stats will be recorded\n");
+		msg.append("Each option will present "+NUM_PROBLEMS+" problems.  Your stats will be recorded\n");
 		msg.append("and a summary will be displayed upon completion.\n");
-		msg.append("Good luck!!!\n");
+		msg.append("Good luck!!!");
 		System.out.println(msg);
 
 		userLogin();
@@ -82,7 +83,7 @@ public class MathFactsApp {
 		Game g = new Game(0,choice);
 		boolean correct = false;
 		
-		for (int i=1; i<=10; i++) {
+		for (int i=1; i<=NUM_PROBLEMS; i++) {
 			FactsNumbers fn = FactsNumbers.generateFactsNumbers(opr);
 			int num1 = fn.getNumber1();
 			int num2 = fn.getNumber2();
@@ -183,6 +184,7 @@ public class MathFactsApp {
 
 	private static void userLogin() {
 		while (!loggedOn) {
+			System.out.println("");
 			String userName = Console.getString("Enter userName:  ");
 			String pwd = Console.getString("Enter Password:  ");
 
@@ -195,7 +197,7 @@ public class MathFactsApp {
 				loggedOn = true;
 			}
 			else {
-				System.err.println("Invalid login.  Please try again.");
+				System.out.println("Invalid login.  Please try again.");
 			}
 		}
 	}
