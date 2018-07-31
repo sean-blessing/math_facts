@@ -1,12 +1,13 @@
 package business;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Game {
 	private int id = 0;
 	private int userID;
 	private String type;
-	private Date datePlayed;
+	private Timestamp datePlayed;
 	private long startTime;
 	private long endTime;
 	private double elapsedTime;
@@ -43,11 +44,11 @@ public class Game {
 		this.type = type;
 	}
 
-	public Date getDatePlayed() {
+	public Timestamp getDatePlayed() {
 		return datePlayed;
 	}
 
-	public void setDatePlayed(Date datePlayed) {
+	public void setDatePlayed(Timestamp datePlayed) {
 		this.datePlayed = datePlayed;
 	}
 

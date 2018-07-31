@@ -1,18 +1,16 @@
 package ui;
 
-import java.awt.DisplayMode;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.function.IntBinaryOperator;
 
 import business.FactsNumbers;
 import business.Game;
 import business.Operation;
+import business.User;
+import business.UserDB;
 import util.Console;
 
 /**
@@ -25,6 +23,7 @@ import util.Console;
 
 public class MathFactsApp {
 	private static boolean loggedOn = false;
+	private static User user = null;
 	private static String userID = "";
 
 	public static void main(String[] args) {
@@ -38,7 +37,7 @@ public class MathFactsApp {
 		String choice = Console.getString(displayMenu());
 		while (!choice.equalsIgnoreCase("x")) {
 			long startTime = System.currentTimeMillis();
-			Date datePlayed = new Date(startTime);
+			Timestamp datePlayed = new Timestamp(startTime);
 			Game g = playMathFacts(choice);
 			long endTime = System.currentTimeMillis();
 			long elapsedTime = endTime - startTime;
@@ -47,7 +46,7 @@ public class MathFactsApp {
 			g.setEndTime(endTime);
 			SimpleDateFormat sdf = new SimpleDateFormat("K:mm:ss' 'a");
 			System.out.println("\n====================================");
-			System.out.println("Thanks for playing, "+userID+"!!!");
+			System.out.println("Thanks for playing, "+user.getFirstName()+"!!!");
 			System.out.println("Start time = "+sdf.format(startTime));
 			System.out.println("End time = "+sdf.format(endTime));
 			BigDecimal secondsBD = new BigDecimal(elapsedTime);
@@ -125,46 +124,46 @@ public class MathFactsApp {
 		return er;
 	}
 	
-	private static void playMultiplicationFacts() {
-		System.out.println("Multiplication Facts\n");
-		int numRight = 0;
-		int numWrong = 0;
-		boolean correct = false;
-		
-		for (int i=1; i<=10; i++) {
-			int num1 = getRandomNbr();
-			int num2 = getRandomNbr();
-			while (!correct) {
-				System.out.println("Question #"+i+":");
-				int ans = Console.getInt(num1 +" x " + num2 + " = ");
-				if  (ans == num1 * num2) {
-					numRight++;
-					correct = true;
-					System.out.println("Correct!");
-				}
-				else {
-					numWrong++;
-					System.out.println("Wrong!  Try again.");
-				}
-			}
-			correct = false;
-		}
-		System.out.println("Stats:");
-		System.out.println("# right = "+ numRight);
-		System.out.println("# wrong = "+ numWrong);
-	}
-	
-	private static void playDivisionFacts() {
-		System.out.println("Function not yet implemented.");
-	}
-
-	private static void playAdditionFacts() {
-		System.out.println("Function not yet implemented.");
-	}
-
-	private static void playSubtractionFacts() {
-		System.out.println("Function not yet implemented.");
-	}
+//	private static void playMultiplicationFacts() {
+//		System.out.println("Multiplication Facts\n");
+//		int numRight = 0;
+//		int numWrong = 0;
+//		boolean correct = false;
+//		
+//		for (int i=1; i<=10; i++) {
+//			int num1 = getRandomNbr();
+//			int num2 = getRandomNbr();
+//			while (!correct) {
+//				System.out.println("Question #"+i+":");
+//				int ans = Console.getInt(num1 +" x " + num2 + " = ");
+//				if  (ans == num1 * num2) {
+//					numRight++;
+//					correct = true;
+//					System.out.println("Correct!");
+//				}
+//				else {
+//					numWrong++;
+//					System.out.println("Wrong!  Try again.");
+//				}
+//			}
+//			correct = false;
+//		}
+//		System.out.println("Stats:");
+//		System.out.println("# right = "+ numRight);
+//		System.out.println("# wrong = "+ numWrong);
+//	}
+//	
+//	private static void playDivisionFacts() {
+//		System.out.println("Function not yet implemented.");
+//	}
+//
+//	private static void playAdditionFacts() {
+//		System.out.println("Function not yet implemented.");
+//	}
+//
+//	private static void playSubtractionFacts() {
+//		System.out.println("Function not yet implemented.");
+//	}
 
 	private static String displayMenu() {
 		StringBuilder msg = new StringBuilder("Math Facts Menu:\n");
@@ -183,10 +182,21 @@ public class MathFactsApp {
 	}
 
 	private static void userLogin() {
-		userID = Console.getString("Enter userID:  ");
-		if (userID!=null && !userID.trim().equals("")) {
-			System.out.println("Welcome "+userID+"!!");
+		while (!loggedOn) {
+			String userName = Console.getString("Enter userName:  ");
+			String pwd = Console.getString("Enter Password:  ");
+
+			UserDB udb = new UserDB();
+			User u = udb.getUser(userName, pwd);
+
+			if (u!=null) {
+				System.out.println("Welcome "+u.getFirstName()+"!!");
+				user = u;
+				loggedOn = true;
+			}
+			else {
+				System.err.println("Invalid login.  Please try again.");
+			}
 		}
-		
 	}
 }
