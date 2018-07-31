@@ -8,6 +8,7 @@ import java.util.function.IntBinaryOperator;
 
 import business.FactsNumbers;
 import business.Game;
+import business.GameDB;
 import business.Operation;
 import business.User;
 import business.UserDB;
@@ -57,6 +58,11 @@ public class MathFactsApp {
 			System.out.println("# right: "+g.getNumRight());
 			System.out.println("# wrong: "+g.getNumWrong());
 			System.out.println("====================================");
+			// Write game date to DB
+			if (!saveGame(g)) {
+				System.out.println("Error saving game.");
+				System.out.println(g);
+			}
 			choice = Console.getString(displayMenu());
 		}
 		System.out.println("Bye!");
@@ -200,5 +206,12 @@ public class MathFactsApp {
 				System.out.println("Invalid login.  Please try again.");
 			}
 		}
+	}
+	
+	private static boolean saveGame(Game g) {
+		Boolean success = false;
+		GameDB gdb = new GameDB();
+		success = gdb.addGame(g);
+		return success;
 	}
 }

@@ -58,6 +58,40 @@ public class GameDB {
 		return u;
 	}
 
+	public boolean addGame(Game g) {
+		String sql = "insert into game (UserID,Type,DatePlayed,StartTime,EndTime,ElapsedTime,NumberQuestions,"
+										+ "NumberRight,NumberWrong)" +
+				 "values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		int rowsUpdated = 0;
+		boolean success = false;
+		
+		try (Connection connection = DBUtil.getConnection();
+       		PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) { // need the oid back after insert
+           ps.setInt(1, g.getUserID());
+           ps.setString(2, g.getType());
+           ps.setTimestamp(3, g.getDatePlayed());
+           ps.setLong(4, g.getStartTime());
+           ps.setLong(5, g.getEndTime());
+           ps.setDouble(6, g.getElapsedTime());
+           ps.setInt(7, g.getNumQuestions());
+           ps.setInt(8, g.getNumRight());
+           ps.setInt(9, g.getNumWrong());
+           rowsUpdated = ps.executeUpdate();
+           //upon successful insert, get the generated key from prepared statement
+           try (ResultSet generatedKey = ps.getGeneratedKeys()) {
+        	   if (generatedKey.next()) {
+        		   g.setId(generatedKey.getInt(1));
+        	   }
+           }
+		}
+		catch (SQLException sqle) {
+			System.out.println("Error adding game!");
+			sqle.printStackTrace();
+		}
+       if (rowsUpdated>0) success=true;
+       return success;
+	}
+
 //	public Game getGame(String uName, String pwd) {
 //		Game u = null;
 //		String sql = "select * from game where GameName = ? and Password = ?";

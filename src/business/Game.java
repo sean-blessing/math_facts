@@ -112,4 +112,11 @@ public class Game {
 		this.numWrong = numWrong;
 	}
 
+	@Override
+	public String toString() {
+		return "Game [id=" + id + ", userID=" + userID + ", type=" + type + ", datePlayed=" + datePlayed
+				+ ", startTime=" + startTime + ", endTime=" + endTime + ", elapsedTime=" + elapsedTime
+				+ ", numQuestions=" + numQuestions + ", numRight=" + numRight + ", numWrong=" + numWrong + "]";
+	}
+
 }
