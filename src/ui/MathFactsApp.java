@@ -82,8 +82,10 @@ public class MathFactsApp {
 				System.out.println("Average time:  "+stats.getTotalTime() / stats.getTimesPlayed());
 				if (stats.isBestTimeBeat()) 
 					System.out.println("You beat your best time!");
-				else
-					System.out.println("Your best time was "+stats.getBestTime()+".  Try again to beat it!");
+				else {
+					System.out.println("Your best time was "+stats.getBestTime()+".  This time:  "+ g.getElapsedTime() + ".");
+					System.out.println("Try again to beat it!");
+				}
 			}
 			System.out.println("====================================");
 			choice = Console.getString(displayMenu());
