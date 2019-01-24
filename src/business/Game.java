@@ -2,6 +2,8 @@ package business;
 
 import java.sql.Timestamp;
 
+import util.TimeUtil;
+
 public class Game {
 	private int id = 0;
 	private int userID;
@@ -85,6 +87,10 @@ public class Game {
 
 	public double getElapsedTime() {
 		return elapsedTime;
+	}
+	
+	public String getElapsedTimeString() {
+		return TimeUtil.getTimeString(elapsedTime);
 	}
 
 	public void setElapsedTime(double elapsedTime) {

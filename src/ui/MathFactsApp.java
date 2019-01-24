@@ -15,6 +15,7 @@ import business.Operation;
 import business.User;
 import business.UserDB;
 import util.Console;
+import util.TimeUtil;
 
 /**
  * 
@@ -78,12 +79,12 @@ public class MathFactsApp {
 			else {
 				System.out.println("Game type = "+g.getOperationString());
 				System.out.println("Total times you've played this game:  "+stats.getTimesPlayed());
-				System.out.println("Total time elapsed during game play:  "+stats.getTotalTime() + " seconds");
-				System.out.println("Average time:  "+stats.getTotalTime() / stats.getTimesPlayed());
+				System.out.println("Total time elapsed during game play:  "+stats.getTotalTimeString());
+				System.out.println("Average time:  "+TimeUtil.getTimeString(stats.getTotalTime() / stats.getTimesPlayed()));
 				if (stats.isBestTimeBeat()) 
 					System.out.println("You beat your best time!");
 				else {
-					System.out.println("Your best time was "+stats.getBestTime()+".  This time:  "+ g.getElapsedTime() + ".");
+					System.out.println("Your best time was "+stats.getBestTimeString()+".  This time:  "+ g.getElapsedTimeString() + ".");
 					System.out.println("Try again to beat it!");
 				}
 			}

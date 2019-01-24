@@ -2,6 +2,8 @@ package business;
 
 import java.util.ArrayList;
 
+import util.TimeUtil;
+
 public class AllStats {
 
 	private User user = null;
@@ -9,6 +11,7 @@ public class AllStats {
 	private ArrayList<Game> games = null;
 	private int timesPlayed = 0;
 	private int bestScore = 0;
+	// times are stored in seconds
 	private double bestTime = 0.0;
 	private double totalTime = 0.0;
 	private boolean bestTimeBeat = false;
@@ -64,6 +67,14 @@ public class AllStats {
 	}
 	public void setTotalTime(double totalTime) {
 		this.totalTime = totalTime;
+	}
+	
+	public String getTotalTimeString() {
+		return TimeUtil.getTimeString(totalTime);
+	}
+
+	public String getBestTimeString() {
+		return TimeUtil.getTimeString(bestTime);
 	}
 
 	public boolean isBestTimeBeat() {
